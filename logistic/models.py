@@ -12,10 +12,10 @@ class Order(models.Model):
     description = models.TextField()
     place_delivery = models.ForeignKey('PlaceDelivery', on_delete=models.CASCADE, related_name='delivery')
     transportation = models.ForeignKey('Transportation', on_delete=models.CASCADE, related_name='transport')
-    correspondence = models.ForeignKey('Correspondence', on_delete=models.CASCADE, related_name='correspond')
+    correspondence = models.TextField()
     service = models.ManyToManyField('Services')
-    photo = models.ImageField(upload_to='image', default=None, null=True)
-    price = models.FloatField()
+    photo = models.ImageField(upload_to='image', default=None, null=True,  blank=False)
+    price = models.FloatField(default=0)
 
     class Meta:
         db_table = 'order'
@@ -25,6 +25,30 @@ class Order(models.Model):
         if self.photo and hasattr(self.photo, 'url'):
             return self.photo.url
 
+    def calculated_price(self):
+        """
+        Функция для расчета цены
+
+        """
+        order_id = self.id
+        services = Order.objects.get(id=self.id).service.all()
+        print(order_id)
+        count_service = 0
+        # Расчет стоимости услуг
+        for service in services:
+            count_service += service.ser_price
+            print(count_service)
+        # Расчет стоимости услуг с учетом места отпрвки
+        delivery = Order.objects.filter(id=self.id)
+        for val in delivery:
+            count_service += val.place_delivery.pd_price
+
+        # Расчет стоимости услуг с учетом типа транспортировки
+        transportation = Order.objects.filter(id=self.id)
+        for val in transportation:
+            count_service += val.transportation.tr_price
+
+        return count_service
 
 class Correspondence(models.Model):
     """Модель для хранения переписки в рамках заказа"""
@@ -47,9 +71,16 @@ class BalanceOperation(models.Model):
         db_table = 'balanceoperation'
 
 
+
+
+
+
 class CityAuction(models.Model):
     """Модель для хранения перечня городов с которыми работает система"""
     city_name = models.CharField(max_length=250)
+
+    def __str__(self):
+        return f'{self.city_name}'
 
     class Meta:
         db_table = 'cityauction'
@@ -61,7 +92,8 @@ class PlaceDelivery(models.Model):
     pd_address = models.CharField(max_length=250)
     pd_price = models.FloatField()
 
-
+    def __str__(self):
+        return f'{self.pd_name}'
     class Meta:
         db_table = 'placedelivery'
 
@@ -71,6 +103,9 @@ class Transportation(models.Model):
     tr_name = models.CharField(max_length=250)
     type_transport = models.CharField(max_length=250)
     tr_price = models.FloatField()
+
+    def __str__(self):
+        return f"{self.tr_name}"
 
     class Meta:
         db_table = 'transportation'
@@ -93,7 +128,8 @@ class Services(models.Model):
 
 class Auction(models.Model):
     name = models.CharField(max_length=250)
-
+    def __str__(self):
+        return f'{self.name}'
     class Meta:
         db_table = 'auction'
 

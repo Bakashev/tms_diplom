@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% csrf_token %}
+<div class="post-entry">
+    <p>{{ user.balance }}</p>
+    <p>{{ user.first_name }}</p>
+    <p>{{ user.email }}</p>
+     <p>{{ user.username }}</p>
+
+</div>
+    <a href="upload_balance" > Пополнить баланс </a>
+
+</body>
+</html>

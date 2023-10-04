@@ -17,8 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from logistic import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Home.as_view()),
-]
+    path('orders/', views.ReestrOrders.as_view(), name='orders'),
+    path('<int:pk>/', views.ShowOrder.as_view(), name='show_order'),
+    path('create/', views.CreatOrder.as_view(), name='create_order'),
+    path('client/<int:pk>/', views.ClientCard.as_view(), name='client'),
+    path('client/<int:pk>/upload_balance/', views.CreateUserBalance.as_view(), name='upload'),
+    path('client/<int:pk>/create_correspondance/', views.CreateCorrespondence.as_view(), name='create_correspondance'),
+    path('correspond/', views.ShowCorrespondence.as_view(), name='show_correspond'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

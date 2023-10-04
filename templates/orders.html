@@ -1,0 +1,22 @@
+
+{% block content %}
+
+ <div class=".flex-wrap">
+
+    {% for ord in orders%}
+
+    <div> {{ ord.address_auction }}</div>
+        <div> 
+            {{ ord.number_order }}
+            <a href={% url 'show_order' ord.id %}>
+             Открыть заказ
+             </a>
+
+        </div>
+
+
+    {% endfor %}
+    <a href="{% url 'create_order' %}" class="nav-link"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Создать заказ</span></span></a>
+
+    </div>
+{% endblock content  %}

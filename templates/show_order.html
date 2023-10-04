@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+      <div class="post-entry">
+       <p> {{ order.name_auction }}</p>
+        <p> {{ order.number_order }}</p>
+        <p> {{ order.address_auction }}</p>
+          <p> {{ order.model_transport }}</p>
+            <p> {{ order.description }}</p>
+          <p> {{ order.place_delivery }}</p>
+          <p> {{ order.correspondence}}</p>
+      <p> {{ order.city_auction}}</p>
+      <p> {{ order.transportation}}</p>
+      <p> {{ order.service}}</p>
+      <p> {{ order.correspondence}}</p>
+      <p> {{ order.price}}</p>
+      <p>{{ user.id }}</p>
+
+          {% if order.photo is not null %}
+                <img src="{{order.photo.url}}" class="img-thumbnail" alt="...">
+          {% endif %}
+
+      <form action="{% url 'client'  user.id %}" method="get">
+                  {% csrf_token %}
+                   <button type="submit">Карточка клиента</button>
+              </form>
+
+
+    </div>
+
+
+
+    {% include 'show_correspondance.html' with correspondence=order.order_core.all%}
+
+    <div>
+
+        <form action="{% url 'create_correspondance'  order.id %}" method="get">
+                  {% csrf_token %}
+                   <button type="submit">Комментарии</button>
+              </form>
+
+    </div>
+</body>
+</html>

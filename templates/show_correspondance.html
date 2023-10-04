@@ -1,0 +1,11 @@
+   {% block content %}
+
+     {% for correspond in correspondence %}
+         <div>
+         <p class="mb-1">{{correspond.user}}</p>
+         <p class="mb-1">{{correspond.message}}</p>
+        </div>
+
+    {% endfor %}
+
+{% endblock content %}
