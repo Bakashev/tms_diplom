@@ -1,22 +1,44 @@
+{% extends 'base.html' %}
+
 
 {% block content %}
 
- <div class=".flex-wrap">
 
-    {% for ord in orders%}
+    <article class="my-3" id="list-group">
+      <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+        <h3>Перечень заказов</h3>
 
-    <div> {{ ord.address_auction }}</div>
-        <div> 
-            {{ ord.number_order }}
-            <a href={% url 'show_order' ord.id %}>
-             Открыть заказ
-             </a>
+      </div>
 
+
+
+
+        <div class="bd-example-snippet bd-code-snippet"><div class="bd-example m-0 border-0">
+        <div class="list-group">
+               {% for ord in object_list%}
+        <a href={% url 'show_order' ord.id %} class="list-group-item ">{{ord.number_order}} | {{ ord.model_transport }}</a>
+
+
+
+
+            {% endfor %}
         </div>
 
+      </div>
+        </div>
+    </article>
+    <div class=".flex-wrap">
+        <div style="text-align: center">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">previous|</a>
+        {% endif %}
+        {% if page_obj.has_next %}
 
-    {% endfor %}
-    <a href="{% url 'create_order' %}" class="nav-link"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Создать заказ</span></span></a>
+        <a href="?page={{ page_obj.next_page_number }}">next |</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last</a>
 
+
+        {% endif %}
+        </div>
     </div>
 {% endblock content  %}

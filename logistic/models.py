@@ -19,6 +19,7 @@ class Order(models.Model):
 
     class Meta:
         db_table = 'order'
+        ordering = ['id']
 
     @property
     def photo_url(self):
@@ -84,6 +85,7 @@ class CityAuction(models.Model):
 
     class Meta:
         db_table = 'cityauction'
+
 
 
 class PlaceDelivery(models.Model):

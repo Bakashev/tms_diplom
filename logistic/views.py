@@ -11,10 +11,15 @@ class Home(View):
 
         return render(self.request, 'home.html')
 
-class ReestrOrders(View):
-    def get(self, request):
-        ords = Order.objects.all()
-        return render(request, "orders.html", {'orders': ords})
+class ReestrOrders(ListView):
+    """Список всех заказов"""
+    model = Order
+    template_name = 'orders.html'
+    paginate_by = 15
+    context_object_name = 'ords'
+    # def get(self, request):
+    #     ords = Order.objects.all()
+    #     return render(request, "orders.html", {'orders': ords})
 
 
 
