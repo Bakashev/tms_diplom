@@ -3,8 +3,8 @@ from .models import Order, BalanceOperation, Correspondence
 from users.models import User
 
 class AllOrders(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(AllOrders, self).__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #     super(AllOrders, self).__init__(*args, **kwargs)
     class Meta:
         model = Order
         fields = ["id",
@@ -14,7 +14,7 @@ class AllOrders(ModelForm):
                   "model_transport",
                   "description",
                   "photo",
-                  "price",
+                  #"price",
                   "city_auction",
                   #"correspondence",
                   "place_delivery",

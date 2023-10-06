@@ -32,7 +32,7 @@ class CreatOrder(CreateView):
     model = Order
 
 
-    def get(self, request):
+    def get(self, request,*args, **kwargs):
         city_ac = CityAuction.objects.all()
         place_de = PlaceDelivery.objects.all()
         transport_delivery = Transportation.objects.all()
@@ -48,6 +48,7 @@ class CreatOrder(CreateView):
     def post(self, request, *args, **kwargs):
         form = AllOrders(request.POST, request.FILES)
         print(request.POST.getlist('name_auction'))
+
         print(request.POST.getlist('address_auction'))
         print(request.POST.getlist('number_order'))
         print(request.POST.getlist('model_transport'))
@@ -73,7 +74,7 @@ class CreatOrder(CreateView):
             place_delivery = form.cleaned_data['place_delivery']
             transportation = form.cleaned_data['transportation']
             service = form.cleaned_data['service']
-            print( 'Service', service)
+            print('Service', service)
             services = Services.objects.filter(order__service__in=service)
             print(services)
 
@@ -100,6 +101,7 @@ class CreatOrder(CreateView):
             # Добавление серивсов в связанную таблицу через M2M
             order.service.set(service)
             order.save()
+            print('1')
             print(order.service)
             order.price = order.calculated_price()
             order.save(update_fields=['price'])
