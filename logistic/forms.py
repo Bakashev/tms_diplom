@@ -16,7 +16,7 @@ class AllOrders(ModelForm):
                   "photo",
                   "price",
                   "city_auction",
-                  "correspondence",
+                  #"correspondence",
                   "place_delivery",
                   "transportation",
                   #"user",

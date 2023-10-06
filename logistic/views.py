@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, View, CreateView
 from .forms import AllOrders, UserOperationsBalance, UserCreateCorrespondence
-from .models import Order, Services, BalanceOperation, Correspondence
+from .models import Order, Services, BalanceOperation, Correspondence, CityAuction, PlaceDelivery, Transportation
 from django.urls import reverse_lazy, reverse
 from users.models import User
 
@@ -33,7 +33,17 @@ class CreatOrder(CreateView):
 
 
     def get(self, request):
-        return render(request, 'create_order.html', {'form': AllOrders})
+        city_ac = CityAuction.objects.all()
+        place_de = PlaceDelivery.objects.all()
+        transport_delivery = Transportation.objects.all()
+        service = Services.objects.all()
+
+        return render(request, 'create_order.html',
+                      {'form': AllOrders(),
+                       'city_act': city_ac,
+                       'place_de': place_de,
+                       'transports': transport_delivery,
+                       'services': service})
 
     def post(self, request, *args, **kwargs):
         form = AllOrders(request.POST, request.FILES)
@@ -68,7 +78,7 @@ class CreatOrder(CreateView):
             print(services)
 
 
-            correspondence = form.cleaned_data['correspondence']
+            #correspondence = form.cleaned_data['correspondence']
             #price = form.cleaned_data['price']
 
             order = self.model.objects.create(
@@ -83,7 +93,7 @@ class CreatOrder(CreateView):
                 place_delivery=place_delivery,
                 transportation=transportation,
                 #service=service,
-                correspondence=correspondence,
+                #correspondence=correspondence,
                 user=request.user
 
             )
@@ -105,7 +115,7 @@ class CreateUserBalance(CreateView):
     model = BalanceOperation
     #fields = ['sum']
 
-    def get(self, request, pk):
+    def get(self, request, *args, **kwargs):
         return render(request, 'upload_balance.html', {'form': UserOperationsBalance})
 
     def post(self, request, *args, **kwargs):
