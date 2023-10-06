@@ -1,15 +1,52 @@
+{% extends 'base.html' %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 
 {% block content %}
 
-    <form enctype="multipart/form-data" action="" method="post"  >
-    {% csrf_token %}
-        {{form.as_p}}
+    <!--Вставка -->
+
+         <div class="container">
+
+            <div class="py-5 text-center">
+
+              <h2>Correspondence</h2>
+              <p class="lead">Выможете оставить свой комментарий и мы обязатльно вам на него ответим.
+                  Просьба соблюдать правила общения и не писать нецензурные вырожения</p>
+            </div>
+
+            <!-- отсюда убрал-->
+
+              <div class="col-md-7 col-lg-8">
+
+                <h4 class="mb-3">Комментарий</h4>
+
+                  <div class="row g-3">
+                  <form enctype="multipart/form-data" action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_message" class="form-label">Description</label>
+                        <textarea class="form-control" id="id_message" rows="3" name="message"></textarea>
+                    </div>
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
+                   </form>
+
+                </div>
+           </div>
 
 
-    <input type="submit" value="Сохранить" />
 
-    </form>
+                 </div>
+
+    </div>
+
+
+
+
+
+
+    <!-- End -->
+
+
 
 {% endblock content %}
