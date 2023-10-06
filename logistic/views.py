@@ -118,7 +118,7 @@ class CreateUserBalance(CreateView):
     #fields = ['sum']
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'upload_balance.html', {'form': UserOperationsBalance})
+        return render(request, 'upload_balance.html', {'form': UserOperationsBalance()})
 
     def post(self, request, *args, **kwargs):
          form = UserOperationsBalance(request.POST)

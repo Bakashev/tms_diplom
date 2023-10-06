@@ -1,18 +1,51 @@
-
-{% load crispy_forms_filters %} #
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 
 {% block content %}
+<!-- Вставка-->
+     <div class="container">
+
+            <div class="py-5 text-center">
+
+              <h2>Top up your balance</h2>
+              <p class="lead">Введите сумму для пополнения баланса, при ввведении отрицательного значения баланс останется без изменения</p>
+            </div>
+
+            <!-- отсюда убрал-->
+
+              <div class="col-md-7 col-lg-8">
+
+                <h4 class="mb-3">Введите сумму для пополнения</h4>
+
+                  <div class="row g-3">
+                  <form enctype="multipart/form-data" action="" method="post">
+                    {% csrf_token %}
+
+
+                    <div class="for-label">
+                      <label for="id_sum" class="form-label">Amount</label>
+
+                        <input type="number" class="form-control" id="id_sum" placeholder="" required=""
+                        name="sum">
+                      <div class="invalid-feedback">
+                          Your username is required.
+
+                      </div>
+                    </div>
+
+
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Refresh</button>
+                   </form>
+
+                </div>
+           </div>
 
 
 
-    <form enctype="multipart/form-data" action="" method="post"  >
-    {% csrf_token %}
-        {{ form.as_p}}
+                 </div>
 
+    </div>
 
-    <input type="submit" value="Пополнить" />
-
-    </form>
 
 {% endblock content %}
